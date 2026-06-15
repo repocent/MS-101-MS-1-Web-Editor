@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SH-101 Sequencer & Synthesizer Editor</title>
+    <meta name="description" content="Authentic Roland SH-101 styled interactive synthesizer, step sequencer, and bidirectional MIDI/SEQ converter.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Top Navigation / Logo -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-text">ROLAND SH-101</div>
+                <div class="subtitle">Interactive Web Synthesizer & MS-101 Sequencer Editor</div>
+            </div>
+            
+            <div class="header-right">
+                <!-- Compact File Upload -->
+                <div class="compact-upload" id="uploadZone">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <span>Load .SEQ / .MID</span>
+                    <input type="file" id="fileInput" accept=".seq,.mid,.midi" hidden>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="main">
+            <!-- File Status & Actions -->
+            <div class="file-status-bar" id="fileStatusBar" style="display: none;">
+                <div class="loaded-file-info">
+                    <span class="file-badge" id="fileBadge">SEQ</span>
+                    <span class="file-name" id="fileName">untitled.seq</span>
+                    <span class="file-meta" id="fileMeta">16 steps · 120 BPM</span>
+                </div>
+                
+                <div class="export-actions">
+                    <button class="btn-export btn-seq" id="downloadSeqBtn" title="Download .SEQ file for SynthTribe">
+                        Export .SEQ (Synth)
+                    </button>
+                    <button class="btn-export btn-midi" id="downloadMidiBtn" title="Download Standard MIDI File">
+                        Export .MID (DAW)
+                    </button>
+                </div>
+            </div>
+
+            <!-- THE SH-101 SYNTHESIS CHASSIS -->
+            <div class="sh101-chassis">
+                
+                <!-- Synth Logo & Branding -->
+                <div class="sh101-branding">
+                    <div class="brand-left">
+                        <span class="brand-roland">Roland</span>
+                        <span class="brand-model">SH-101</span>
+                        <span class="brand-desc">SYNTHESIZER</span>
+                    </div>
+                    
+                    <!-- Transport and Global Controls -->
+                    <div class="brand-right">
+                        <div class="synth-tempo-panel">
+                            <div class="tempo-display" id="tempoDisplay">120</div>
+                            <div class="tempo-controls">
+                                <label for="bpmInput">BPM</label>
+                                <input type="number" id="bpmInput" value="120" min="20" max="300" step="1">
+                            </div>
+                        </div>
+
+                        <button class="btn-sh-play" id="playBtn">
+                            <span class="led-indicator" id="playLed"></span>
+                            <span class="btn-label">PLAY</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SYNTH PANEL (SLIDERS) -->
+                <div class="sh101-panel">
+                    
+                    <!-- MODULATOR (LFO) -->
+                    <div class="panel-section mod-section">
+                        <div class="section-title title-blue">MODULATOR</div>
+                        <div class="sliders-row">
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="lfoRate" class="slider-vertical" min="0.1" max="30" step="0.1" value="6">
+                                </div>
+                                <span class="slider-label">LFO RATE</span>
+                            </div>
+                        </div>
+                        <div class="switch-control">
+                            <span class="switch-label">WAVE</span>
+                            <select id="lfoWave">
+                                <option value="triangle">TRIANGLE</option>
+                                <option value="square">SQUARE</option>
+                                <option value="sawtooth">SAW</option>
+                                <option value="noise">RANDOM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- VCO -->
+                    <div class="panel-section vco-section">
+                        <div class="section-title title-white">VCO</div>
+                        <div class="switch-row">
+                            <div class="switch-control">
+                                <span class="switch-label">RANGE</span>
+                                <select id="vcoRange">
+                                    <option value="16">16'</option>
+                                    <option value="8" selected>8'</option>
+                                    <option value="4">4'</option>
+                                    <option value="2">2'</option>
+                                </select>
+                            </div>
+                            
+                            <div class="switch-control">
+                                <span class="switch-label">PW MODE</span>
+                                <select id="pwMode">
+                                    <option value="manual">MAN</option>
+                                    <option value="lfo">LFO</option>
+                                    <option value="env">ENV</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="sliders-row">
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="pulseWidth" class="slider-vertical" min="5" max="95" step="1" value="50">
+                                </div>
+                                <span class="slider-label">PULSE WIDTH</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SOURCE MIXER -->
+                    <div class="panel-section mixer-section">
+                        <div class="section-title title-white">SOURCE MIXER</div>
+                        <div class="sliders-row">
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="mixSaw" class="slider-vertical" min="0" max="100" step="1" value="80">
+                                </div>
+                                <span class="slider-label">SAW</span>
+                            </div>
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="mixPulse" class="slider-vertical" min="0" max="100" step="1" value="0">
+                                </div>
+                                <span class="slider-label">PULSE</span>
+                            </div>
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="mixSub" class="slider-vertical" min="0" max="100" step="1" value="40">
+                                </div>
+                                <span class="slider-label">SUB</span>
+                            </div>
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="mixNoise" class="slider-vertical" min="0" max="100" step="1" value="5">
+                                </div>
+                                <span class="slider-label">NOISE</span>
+                            </div>
+                        </div>
+                        <div class="switch-control sub-type-control">
+                            <select id="subType">
+                                <option value="1sq">1 OCT Down ⨅</option>
+                                <option value="2sq" selected>2 OCT Down ⨅</option>
+                                <option value="2pulse">2 OCT Down ⏴</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- VCF (FILTER) -->
+                    <div class="panel-section vcf-section">
+                        <div class="section-title title-red">VCF</div>
+                        <div class="sliders-row">
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="vcfCutoff" class="slider-vertical" min="0" max="100" step="1" value="50">
+                                </div>
+                                <span class="slider-label">FREQ</span>
+                            </div>
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="vcfRes" class="slider-vertical" min="0" max="100" step="1" value="20">
+                                </div>
+                                <span class="slider-label">RES</span>
+                            </div>
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="vcfEnv" class="slider-vertical" min="0" max="100" step="1" value="40">
+                                </div>
+                                <span class="slider-label">ENV DEPTH</span>
+                            </div>
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="vcfLfo" class="slider-vertical" min="0" max="100" step="1" value="10">
+                                </div>
+                                <span class="slider-label">LFO MOD</span>
+                            </div>
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="vcfKey" class="slider-vertical" min="0" max="100" step="1" value="50">
+                                </div>
+                                <span class="slider-label">KEY FOLLOW</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VCA -->
+                    <div class="panel-section vca-section">
+                        <div class="section-title title-white">VCA</div>
+                        <div class="switch-control vca-switch">
+                            <span class="switch-label">ENV / GATE</span>
+                            <select id="vcaMode">
+                                <option value="env" selected>ENV</option>
+                                <option value="gate">GATE</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- ENV (ADSR ENVELOPE) -->
+                    <div class="panel-section env-section">
+                        <div class="section-title title-orange">ENV</div>
+                        <div class="sliders-row">
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="envAttack" class="slider-vertical" min="1" max="100" step="1" value="2">
+                                </div>
+                                <span class="slider-label">A</span>
+                            </div>
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="envDecay" class="slider-vertical" min="1" max="100" step="1" value="30">
+                                </div>
+                                <span class="slider-label">D</span>
+                            </div>
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="envSustain" class="slider-vertical" min="0" max="100" step="1" value="60">
+                                </div>
+                                <span class="slider-label">S</span>
+                            </div>
+                            <div class="slider-control">
+                                <div class="slider-track-container">
+                                    <input type="range" id="envRelease" class="slider-vertical" min="1" max="100" step="1" value="40">
+                                </div>
+                                <span class="slider-label">R</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- SEQUENCER PANEL (STEP EDITORS) -->
+                <div class="sh101-sequencer">
+                    <div class="seq-panel-header">
+                        <span class="seq-panel-title" id="seqPanelTitle">16-STEP SEQUENCER</span>
+                        
+                        <div class="seq-panel-actions">
+                            <!-- Step Count Input -->
+                            <div class="step-count-group">
+                                <label for="stepCountInput" class="step-count-label">STEPS</label>
+                                <input type="number" id="stepCountInput" class="step-count-input" min="1" max="32" value="16" style="width: 50px; background: #111516; color: #fff; border: 1px solid #2c3538; border-radius: 3px; padding: 2px 4px; font-family: 'JetBrains Mono', monospace; text-align: center;">
+                            </div>
+
+                            <div class="transpose-control">
+                                <label for="transposeInput">Shift Octave</label>
+                                <select id="transposeInput">
+                                    <option value="-24">-2 Octaves</option>
+                                    <option value="-12">-1 Octave</option>
+                                    <option value="0" selected>0 (Normaal)</option>
+                                    <option value="12">+1 Octave</option>
+                                    <option value="24">+2 Octaves</option>
+                                </select>
+                            </div>
+                            <button class="btn-sh-secondary" id="clearBtn">CLEAR SEQ</button>
+                        </div>
+                    </div>
+
+                    <!-- Step Grid -->
+                    <div class="sh-step-grid" id="stepGrid"></div>
+                </div>
+
+                <!-- PIANO ROLL INTERACTION PANEL -->
+                <div class="sh101-piano-roll-container">
+                    <div class="seq-panel-header">
+                        <span class="seq-panel-title">VISUAL PATTERN EDITOR (PIANO ROLL)</span>
+                    </div>
+                    <div class="piano-roll-canvas-container">
+                        <canvas id="pianoRoll" width="800" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- RETRO PIANO KEYBOARD -->
+                <div class="sh101-keyboard-container">
+                    <div class="keyboard" id="keyboard">
+                        <!-- Keys generated dynamically in app.js -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Error -->
+            <div class="error-card" id="errorCard" style="display:none">
+                <span class="error-icon">⚠️</span>
+                <p id="errorText"></p>
+            </div>
+        </main>
+
+        <!-- Help Info -->
+        <section class="help-section">
+            <div class="help-card">
+                <h3>Klassieke Roland Vibe & UX</h3>
+                <p>Deze editor simuleert de originele **Roland SH-101** synthesizer. Schuif de sliders om de klankkleur van de zaagtand, pulsgolf, sub-oscillator en ruis aan te passen. Gebruik de filter cutoff en resonantie om analoge filter sweeps te maken. Klik direct op de toetsen van de synthesizer om de klank live te testen (preview).</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>Retro SH-101 Engine · Bidirectionele MIDI/SEQ Converter · Behringer MS-1 & MS-101 Editor</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

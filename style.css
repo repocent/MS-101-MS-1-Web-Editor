@@ -1,0 +1,839 @@
+/* =======================================================
+   Roland SH-101 Retro Synthesizer — Styles
+   ======================================================= */
+
+:root {
+    /* Retro Plastic Colors */
+    --sh-grey: #838e91;        /* Main chassis grey */
+    --sh-grey-dark: #6a7477;   /* Shadow grey */
+    --sh-casing-dark: #1b2022; /* Dark slider panels */
+    --sh-casing-light: #2c3437;/* Inside section borders */
+    
+    --text-white: #f5f6f7;
+    --text-dark: #1a1e20;
+    
+    /* Panel Accents */
+    --sh-blue: #0ea5e9;
+    --sh-red: #f43f5e;
+    --sh-orange: #f97316;
+    --sh-light: #ffffff;
+    
+    /* Playback Active LED */
+    --led-red: #ff3b30;
+    --led-red-dim: #4a1010;
+    
+    --font-sans: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-brand: 'Orbitron', sans-serif;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: #0f1315;
+    color: var(--text-white);
+    min-height: 100vh;
+    padding: 20px 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+.app {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ---- Header / Navigation ---- */
+.header {
+    background: var(--sh-casing-dark);
+    padding: 14px 20px;
+    border-radius: 8px;
+    border: 1px solid #2d3538;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.logo-text {
+    font-family: var(--font-brand);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--sh-blue);
+    text-shadow: 0 0 10px rgba(14, 165, 233, 0.2);
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    color: #8c9699;
+}
+
+.compact-upload {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--sh-grey);
+    color: var(--text-dark);
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.compact-upload:hover {
+    background: #9aa7ab;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* ---- File Status Bar ---- */
+.file-status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--sh-casing-dark);
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: 1px solid #2d3538;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.loaded-file-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-badge {
+    background: var(--sh-blue);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+}
+
+.file-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+}
+
+.file-meta {
+    font-size: 0.75rem;
+    color: #8c9699;
+}
+
+.export-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-export {
+    padding: 7px 14px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: white;
+}
+
+.btn-seq {
+    background: var(--sh-red);
+}
+.btn-seq:hover {
+    background: #ff5a79;
+    box-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
+}
+
+.btn-midi {
+    background: var(--sh-blue);
+}
+.btn-midi:hover {
+    background: #38bdf8;
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+}
+
+/* =======================================================
+   THE SH-101 CHASSIS STYLE
+   ======================================================= */
+.sh101-chassis {
+    background: var(--sh-grey);
+    border: 4px solid var(--sh-grey-dark);
+    border-radius: 12px;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 8px 30px rgba(0,0,0,0.6);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    user-select: none;
+}
+
+/* ---- Synth Branding & Transport ---- */
+.sh101-branding {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--sh-grey-dark);
+    padding-bottom: 12px;
+}
+
+.brand-roland {
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text-dark);
+    margin-right: 6px;
+}
+
+.brand-model {
+    font-family: var(--font-brand);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    letter-spacing: 0.05em;
+    margin-right: 6px;
+}
+
+.brand-desc {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--text-dark);
+}
+
+.brand-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.synth-tempo-panel {
+    display: flex;
+    align-items: center;
+    background: var(--sh-casing-dark);
+    border: 2px solid var(--sh-grey-dark);
+    padding: 4px 10px;
+    border-radius: 4px;
+    gap: 10px;
+}
+
+.tempo-display {
+    font-family: var(--font-mono);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--sh-red);
+    text-shadow: 0 0 6px rgba(255,59,48,0.4);
+    min-width: 40px;
+    text-align: center;
+}
+
+.tempo-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.tempo-controls label {
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #8c9699;
+}
+
+.tempo-controls input {
+    background: #111;
+    border: 1px solid var(--sh-grey-dark);
+    border-radius: 3px;
+    color: white;
+    width: 54px;
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 2px;
+    outline: none;
+    font-family: var(--font-mono);
+}
+
+.btn-sh-play {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #333;
+    border: 2px solid #111;
+    border-radius: 4px;
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    transition: background 0.1s;
+}
+
+.btn-sh-play:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+}
+
+.btn-sh-play.playing {
+    background: #444;
+}
+
+.led-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--led-red-dim);
+    border: 1px solid #000;
+    margin-bottom: 4px;
+    transition: all 0.15s;
+}
+
+.led-indicator.active {
+    background: var(--led-red);
+    box-shadow: 0 0 8px var(--led-red);
+}
+
+.btn-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #ccc;
+    letter-spacing: 0.05em;
+}
+
+/* ---- Synthesizer Panel & Sliders ---- */
+.sh101-panel {
+    background: var(--sh-casing-dark);
+    border: 3px solid var(--sh-grey-dark);
+    border-radius: 6px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 0.8fr 1fr 1.6fr 1.8fr 0.6fr 1.5fr;
+    gap: 6px;
+    overflow-x: auto;
+}
+
+.panel-section {
+    border-right: 1px solid var(--sh-casing-light);
+    padding: 4px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-height: 230px;
+}
+
+.panel-section:last-child {
+    border-right: none;
+}
+
+.section-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-align: center;
+    width: 100%;
+    padding-bottom: 4px;
+    border-bottom: 2px solid;
+    margin-bottom: 4px;
+}
+
+.title-blue { border-color: var(--sh-blue); color: var(--sh-blue); }
+.title-white { border-color: var(--text-white); color: var(--text-white); }
+.title-red { border-color: var(--sh-red); color: var(--sh-red); }
+.title-orange { border-color: var(--sh-orange); color: var(--sh-orange); }
+
+.sliders-row {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    flex: 1;
+}
+
+/* Vertical Sliders Styling */
+.slider-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    height: 100%;
+}
+
+.slider-track-container {
+    height: 120px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.slider-vertical {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 110px; /* height when rotated */
+    height: 4px;
+    background: #000;
+    outline: none;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+/* Slider knob: retro cap with indicator line */
+.slider-vertical::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 18px;
+    background: #222;
+    border: 1.5px solid #fff;
+    border-radius: 1px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    position: relative;
+    background-image: linear-gradient(to right, transparent 4px, var(--sh-red) 4px, var(--sh-red) 6px, transparent 6px);
+}
+
+.slider-label {
+    font-size: 0.52rem;
+    font-weight: 700;
+    color: #8c9699;
+    text-align: center;
+    height: 16px;
+    line-height: 1.2;
+}
+
+.switch-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+}
+
+.switch-row {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.switch-label {
+    font-size: 0.52rem;
+    font-weight: 700;
+    color: #8c9699;
+    text-transform: uppercase;
+}
+
+.switch-control select {
+    background: #000;
+    border: 1px solid var(--sh-grey-dark);
+    color: white;
+    font-size: 0.65rem;
+    padding: 3px;
+    border-radius: 3px;
+    outline: none;
+    width: 100%;
+    text-align: center;
+}
+
+.sub-type-control select {
+    font-size: 0.6rem;
+}
+
+.vca-switch {
+    margin-top: 20px;
+}
+
+/* ---- Sequencer Section ---- */
+.sh101-sequencer {
+    background: var(--sh-casing-dark);
+    border: 3px solid var(--sh-grey-dark);
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.seq-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--sh-casing-light);
+    padding-bottom: 6px;
+}
+
+.seq-panel-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--sh-blue);
+    letter-spacing: 0.05em;
+    font-family: var(--font-brand);
+}
+
+.seq-panel-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.transpose-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.transpose-control label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #8c9699;
+    text-transform: uppercase;
+}
+
+.transpose-control select {
+    background: #000;
+    border: 1px solid var(--sh-grey-dark);
+    color: white;
+    font-size: 0.65rem;
+    padding: 2px 4px;
+    border-radius: 3px;
+    outline: none;
+}
+
+.btn-sh-secondary {
+    background: var(--sh-grey);
+    color: var(--text-dark);
+    border: none;
+    padding: 4px 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.btn-sh-secondary:hover {
+    background: #9aa7ab;
+}
+
+/* Step Count Toggle Buttons */
+.step-count-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.step-count-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #8c9699;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.step-count-btns {
+    display: flex;
+    border: 1px solid var(--sh-grey-dark);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.btn-step-count {
+    padding: 3px 10px;
+    background: #1b2022;
+    color: #8c9699;
+    border: none;
+    border-right: 1px solid var(--sh-grey-dark);
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.btn-step-count:last-child {
+    border-right: none;
+}
+
+.btn-step-count.active {
+    background: var(--sh-red);
+    color: white;
+}
+
+.btn-step-count:hover:not(.active) {
+    background: var(--sh-casing-light);
+    color: var(--text-white);
+}
+
+
+/* 16-Step Hardware Buttons Grid */
+.sh-step-grid {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    gap: 6px;
+    overflow-x: auto;
+    padding: 6px 0;
+}
+
+.sh-step-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--sh-grey-dark);
+    border: 2px solid #525c5f;
+    border-radius: 4px;
+    padding: 6px 4px;
+    gap: 6px;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.2);
+}
+
+.sh-step-cell.active-step {
+    border-color: var(--sh-blue);
+}
+
+.sh-step-cell.playing-step {
+    background: #7a8689;
+}
+
+.sh-step-led {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--led-red-dim);
+    border: 1px solid #111;
+}
+
+.sh-step-led.active {
+    background: var(--led-red);
+    box-shadow: 0 0 6px var(--led-red);
+}
+
+.btn-sh-step {
+    width: 100%;
+    background: #f3f4f6;
+    color: var(--text-dark);
+    border: 1px solid #9ca3af;
+    border-bottom: 3px solid #7c8386;
+    border-radius: 3px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 4px 2px;
+    cursor: pointer;
+    text-align: center;
+    font-family: var(--font-mono);
+}
+
+.btn-sh-step.step-rest {
+    background: #8b979a;
+    border-color: #6a7477;
+    border-bottom-color: #4b5254;
+    color: #4b5254;
+}
+
+.btn-sh-step.step-tie {
+    background: #b0c4de;
+    border-color: #9cb2cd;
+    border-bottom-color: #7b91ac;
+    color: #1e3a5f;
+}
+
+.sh-step-note-sel {
+    width: 100%;
+    background: #000;
+    border: 1px solid #444;
+    color: var(--sh-blue);
+    font-size: 0.6rem;
+    font-family: var(--font-mono);
+    padding: 1px;
+    border-radius: 2px;
+    outline: none;
+    text-align: center;
+}
+
+.sh-step-modifiers {
+    display: flex;
+    gap: 3px;
+    width: 100%;
+}
+
+.sh-mod-btn {
+    flex: 1;
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 2px 0;
+    border-radius: 2px;
+    cursor: pointer;
+    background: #222;
+    color: #666;
+    border: 1px solid #111;
+    text-align: center;
+}
+
+.sh-mod-btn.active-acc {
+    background: var(--sh-orange);
+    color: white;
+    border-color: var(--sh-orange);
+}
+
+.sh-mod-btn.active-sld {
+    background: var(--sh-blue);
+    color: white;
+    border-color: var(--sh-blue);
+}
+
+/* ---- Piano Roll Visual Section ---- */
+.sh101-piano-roll-container {
+    background: var(--sh-casing-dark);
+    border: 3px solid var(--sh-grey-dark);
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.piano-roll-canvas-container {
+    background: #0e1214;
+    border-radius: 4px;
+    border: 1px solid #222;
+    overflow: hidden;
+}
+
+#pianoRoll {
+    display: block;
+    width: 100%;
+    height: 160px;
+}
+
+/* ---- Keyboard Chassis Section ---- */
+.sh101-keyboard-container {
+    background: #080a0b;
+    border-radius: 6px;
+    border: 3px solid var(--sh-grey-dark);
+    padding: 10px 4px 4px 4px;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+}
+
+.keyboard {
+    display: flex;
+    position: relative;
+    height: 120px;
+    background: #000;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.key-white {
+    flex: 1;
+    height: 100%;
+    background: #f9f9f9;
+    border: 1px solid #b8b8b8;
+    border-bottom: 6px solid #dcdcdc;
+    border-radius: 0 0 3px 3px;
+    cursor: pointer;
+    z-index: 1;
+    transition: background 0.1s;
+}
+
+.key-white:active, .key-white.active {
+    background: #e5f2ff;
+    border-bottom-width: 2px;
+    transform: translateY(4px);
+}
+
+.key-black {
+    width: 2.2%;
+    height: 60%;
+    background: #222629;
+    border-bottom: 4px solid #000;
+    border-radius: 0 0 2px 2px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 2;
+    transition: background 0.1s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.key-black:active, .key-black.active {
+    background: var(--sh-blue);
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+}
+
+/* ---- Error Card ---- */
+.error-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.error-icon {
+    font-size: 1.2rem;
+}
+
+.error-card p {
+    font-size: 0.85rem;
+    color: var(--sh-red);
+}
+
+/* ---- Help Section ---- */
+.help-section {
+    margin-top: 10px;
+}
+
+.help-card {
+    background: var(--sh-casing-dark);
+    border: 1px solid #2d3538;
+    border-radius: 6px;
+    padding: 14px;
+}
+
+.help-card h3 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--sh-blue);
+    margin-bottom: 6px;
+}
+
+.help-card p {
+    font-size: 0.75rem;
+    color: #8c9699;
+    line-height: 1.5;
+}
+
+/* ---- Footer ---- */
+.footer {
+    padding: 16px 0;
+    text-align: center;
+}
+
+.footer p {
+    font-size: 0.65rem;
+    color: #4b5254;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 800px) {
+    .sh101-panel {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
